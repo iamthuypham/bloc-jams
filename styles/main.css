@@ -28,7 +28,7 @@
  
  .navbar {
    position: relative;
-   padding: 0.5rem;
+   padding: 12.5px;
    background-color: rgba(101, 18, 95, 0.5);
    /*last value is Opacity*/
    z-index: 1;
@@ -70,7 +70,14 @@
  
  .links-container .navbar-link:hover {
    color: rgb(233, 50, 117);
+   background-color: white;
  }
+ 
+ .links-container .navbar-link:active {
+   color: rgb(233, 50, 117);
+ }
+ 
+ 
  /* Medium and small screens (640px) */
  
  @media (min-width: 640px) {
