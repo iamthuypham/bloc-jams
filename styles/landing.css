@@ -27,7 +27,7 @@
 }
 
 .hero-content .hero-title {
-  font-family: 'Open Sans Condensed', sans-serif;
+   font-family: 'Open Sans Condensed', sans-serif;
    position: absolute;             /* positioning will be explained in a resource */
    top: 40%;                       /* positioning will be explained in a resource */
    -webkit-transform: translateY(-50%);
@@ -36,7 +36,7 @@
    transform: translateY(-50%);
    width: 100%;                    /* makes sure the title inhabits the full width of its container */
    text-align: center;             /* aligns text in the horizontal center of the element */
-   font-size: 6rem;                /* specifies the size of the font in root em units */
+   font-size: 5rem;                /* specifies the size of the font in root em units */
    font-weight: 300;               /* makes the font thinner or lighter weight */
    text-transform: uppercase;      /* transforms the text to be all uppercase lettering */
    letter-spacing: 0.2rem;         /* puts 0.5 root ems worth of space between each letter */
@@ -45,14 +45,10 @@
 
 .selling-points {
    position: relative;
-   display: table;
-   width: 100%;
 }
 
 .point {
-   display: table-cell;
    position: relative;
-   width: 33.3%;
    padding: 2rem;
    text-align: center;
 }
