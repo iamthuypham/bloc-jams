@@ -47,6 +47,29 @@ var albumMarconi = {
     duration: '2:15'
   }]
 };
+var albumZimmers = {
+  title: 'Batman vs Superman: Dawn Of Justice',
+  artist: 'Hans Zimmer & Junkie XL',
+  label: 'BATMAN V SUPERMAN: DAWN OF JUSTICE - THE SOUNDTRACK',
+  year: '2016',
+  albumArtUrl: 'http://ii.wbshop.com/fcgi-bin/iipsrv.fcgi?FIF=/images/warnerbros/source/warnerbros/bvswtmst02.tif&wid=3000&cvt=jpeg',
+  songs: [{
+    title: 'Beautiful Lie',
+    duration: '3:48'
+  }, {
+    title: 'Do You Bleed?',
+    duration: '4:36'
+  }, {
+    title: 'Black and Blue',
+    duration: '8:31'
+  }, {
+    title: 'Is She With You?',
+    duration: '5:47'
+  }, {
+    title: 'This Is My World',
+    duration: '6:24'
+  }]
+};
 //Album View template
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
@@ -58,14 +81,16 @@ var createSongRow = function(songNumber, songName, songLength) {
 
   return template;
 };
+var albumList = [albumPicasso, albumMarconi, albumZimmers];
+
+//Get album element
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
 var setCurrentAlbum = function(album) {
-  //Get album element
-  var albumTitle = document.getElementsByClassName('album-view-title')[0];
-  var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-  var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-  var albumImage = document.getElementsByClassName('album-cover-art')[0];
-  var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
   //Assign album information
   albumTitle.firstChild.nodeValue = album.title;
@@ -75,13 +100,18 @@ var setCurrentAlbum = function(album) {
 
   //Clean album view first
   albumSongList.innerHTML = '';
-
+  
   //Then loop through each song of an album
   for (var i = 0; i < album.songs.length; i++) {
     albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
   }
 };
-
+  
 window.onload = function() {
   setCurrentAlbum(albumPicasso);
+  var i = 0;
+  albumImage.addEventListener('click',function(){
+    setCurrentAlbum(albumList[i]);  
+    i++;
+  });
 };
