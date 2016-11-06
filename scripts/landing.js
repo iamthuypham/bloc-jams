@@ -1,9 +1,9 @@
-var animatePoints = function() {
- 
-  var points = document.getElementsByClassName('point');
+var pointsArray = document.getElementsByClassName('point');
+
+var animatePoints = function(points) {
   //Function to reveal each elements of sellingpoint
-  var revealPoint = function(){
-    for (var i=0;i<points.length;i++){
+  var revealPoint = function() {
+    for (var i = 0; i < points.length; i++) {
       points[i].style.opacity = 1;
       points[i].style.transform = "scaleX(1) translateY(0)";
       points[i].style.msTransform = "scaleX(1) translateY(0)";
@@ -12,3 +12,18 @@ var animatePoints = function() {
   };
   revealPoint();
 };
+//Event handler executes when browser has loaded
+window.onload = function() {
+  //Immediately load animation for device with tall screen
+  if (window.innerHeight > 950) {
+         animatePoints(pointsArray);
+     }
+  //Otherwise load animation based on scrolling event
+  var sellingPoints = document.getElementsByClassName('selling-points')[0];
+  var scrollDistance = sellingPoints.getBoundingClientRect().top - window.innerHeight + 200;
+  window.addEventListener('scroll', function(event) {
+     if (document.documentElement.scrollTop || document.body.scrollTop >= scrollDistance) {
+         animatePoints(pointsArray);   
+     }
+  });
+}
