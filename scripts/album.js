@@ -100,30 +100,31 @@ window.onload = function() {
       // Change the content from the number to the play button's HTML
       var songItem = getSongItem(event.target);
       var songItemNumber = songItem.getAttribute('data-song-number');
-      
+
       if (songItemNumber !== currentlyPlayingSong) {
         songItem.innerHTML = playButtonTemplate;
       }
     }
-    // var playButton = event.target.parentElement.querySelector('.ion-play');
-
-    // playButton.addEventListener('click', pauseButton)
-
-    // function pauseButton(state) {
-    //   console.log(state.target.className)
-    //   if (state.target.className === 'ion-play') {
-    //     state.target.className = 'ion-pause'
-    //   }
-    // }
   });
   //findParentByClassName - used to return song item
   var findParentByClassName = function(element, targetClass) {
     if (element) {
       var currentParent = element.parentElement;
+      
       while (currentParent.className != targetClass && currentParent.className !== null) {
+        alert("Checking " + currentParent.className +" class. Error: parent class name is not "+ targetClass+ ". We are keep looking ...")
         currentParent = currentParent.parentElement;
+        alert("We are checking the next parent class now. ")
+        if(!currentParent || currentParent.className === ''){
+          alert("Next parent class is null or empty. No more looking")
+          break;
+        } else {
+          alert("Next parent class is: "+ currentParent.className)
+          return currentParent;
+        }
       }
-      return currentParent;
+      
+
     }
   };
 
@@ -137,6 +138,7 @@ window.onload = function() {
       case 'album-view-song-item':
         return element.querySelector('.song-item-number');
       case 'song-item-title':
+        return findParentByClassName(element,'.landing');
       case 'song-item-duration':
         return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
       case 'song-item-number':
