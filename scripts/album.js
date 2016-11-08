@@ -204,6 +204,35 @@ var togglePlayFromPlayerBar = function() {
   }
 }
 
+var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
+  var offsetXPercent = seekBarFillRatio * 100;
+  //Set min max limit for offsetXPercent
+  offsetXPercent = Math.max(0, offsetXPercent);
+  offsetXPercent = Math.min(100, offsetXPercent);
+
+  //Convert to percentage and set .fill width and position of thumb
+  var percentageString = offsetXPercent + '%';
+  $seekBar.find('.fill').width(percentageString);
+  $seekBar.find('.thumb').css({
+    left: percentageString
+  });
+};
+
+var setupSeekBars = function() {
+  var $seekBars = $('.player-bar .seek-bar');
+
+  $seekBars.click(function(event) {
+    //Find horizontal pageX of the clicked position
+    var offsetX = event.pageX - $(this).offset().left;
+    var barWidth = $(this).width();
+    //Find ratio of clicked position to the whole bar
+    var seekBarFillRatio = offsetX / barWidth;
+
+    //Update the .fill and .thumb with current retio
+    updateSeekPercentage($(this), seekBarFillRatio);
+  });
+};
+
 //Button Play in album list and in play control
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
@@ -223,6 +252,7 @@ var $ppButton = $('.main-controls .play-pause')
 
 $(document).ready(function() {
   setCurrentAlbum(albumPicasso);
+  setupSeekBars();
   $nextButton.click(nextSong);
   $previousButton.click(previousSong);
   $ppButton.click(togglePlayFromPlayerBar)
