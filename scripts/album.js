@@ -24,7 +24,7 @@ var createSongRow = function(songNumber, songName, songLength) {
       // currentlyPlayingSongNumber = null;
       // currentSongFromAlbum = null;
       if (currentSoundFile.isPaused()) {
-        $(this).html(playButtonTemplate);
+        $(this).html(pauseButtonTemplate);
         $('.main-controls .play-pause').html(playerBarPauseButton);
         currentSoundFile.play();
       }
@@ -190,6 +190,20 @@ var updatePlayerBarSong = function() {
 
 };
 
+//Play Pause in control bar sync up with song status
+var togglePlayFromPlayerBar = function() {
+  if (currentSoundFile.isPaused()) {
+    getSongNumberCell(currentlyPlayingSongNumber).html(pauseButtonTemplate);
+    $('.main-controls .play-pause').html(playerBarPauseButton);
+    currentSoundFile.play();
+  }
+  else {
+    getSongNumberCell(currentlyPlayingSongNumber).html(playButtonTemplate);
+    $('.main-controls .play-pause').html(playerBarPlayButton);
+    currentSoundFile.pause();
+  }
+}
+
 //Button Play in album list and in play control
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
@@ -205,9 +219,11 @@ var currentVolume = 80;
 
 var $nextButton = $('.main-controls .next');
 var $previousButton = $('.main-controls .previous');
+var $ppButton = $('.main-controls .play-pause')
 
 $(document).ready(function() {
   setCurrentAlbum(albumPicasso);
   $nextButton.click(nextSong);
   $previousButton.click(previousSong);
+  $ppButton.click(togglePlayFromPlayerBar)
 });
