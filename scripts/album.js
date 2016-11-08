@@ -10,7 +10,7 @@ var createSongRow = function(songNumber, songName, songLength) {
   var $row = $(template);
 
   var clickHandler = function() {
-    var songNumber = $(this).attr('data-song-number');
+    var songNumber = parseInt($(this).attr('data-song-number'));
     //display Pause when first time click
     if (currentlyPlayingSongNumber === null) {
       $(this).html(pauseButtonTemplate);
@@ -39,18 +39,15 @@ var createSongRow = function(songNumber, songName, songLength) {
   var onHover = function(event) {
     // Change the content from the number to the play button's HTML
     var songNumber = $(this).find('.song-item-number');
-    var songItemNumber = songNumber.attr('data-song-number');
+    var songItemNumber = parseInt(songNumber.attr('data-song-number'));
 
     if (songItemNumber !== currentlyPlayingSongNumber) {
       songNumber.html(playButtonTemplate);
     }
   }
-
-
   var offHover = function(event) {
     var songNumber = $(this).find('.song-item-number');
-    var songItemNumber = songNumber.attr('data-song-number');
-
+    var songItemNumber = parseInt(songNumber.attr('data-song-number'));
     //if this song is currently active, when mouse leave, it should stay active, at Pause button. Another words, if this song is currently inactive, when mouse leave, it should back to song number
     if (songItemNumber !== currentlyPlayingSongNumber) {
       songNumber.html(songItemNumber);
@@ -131,7 +128,7 @@ var previousSong = function() {
   // Note that we're _incrementing_ the song here
   currentSongIndex--;
 
-  if (currentSongIndex <= -1 ) {
+  if (currentSongIndex <= -1) {
     currentSongIndex = currentAlbum.songs.length - 1;
   }
 
