@@ -103,7 +103,7 @@ var setCurrentAlbum = function(album) {
 
   //Then loop through each song of an album
   for (var i = 0; i < album.songs.length; i++) {
-    var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+    var $newRow = createSongRow(i + 1, album.songs[i].title, filterTimeCode(album.songs[i].duration));
     $albumSongList.append($newRow);
   }
 };
@@ -209,7 +209,7 @@ var updatePlayerBarSong = function() {
   $('.currently-playing .artist-name').text(currentAlbum.artist);
   $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
   $('.main-controls .play-pause').html(playerBarPauseButton);
-
+  setTotalTimeInPlayerBar();
 };
 
 //Play Pause in control bar sync up with song status
@@ -235,6 +235,7 @@ var updateSeekBarWhileSongPlays = function() {
       var $seekBar = $('.seek-control .seek-bar');
 
       updateSeekPercentage($seekBar, seekBarFillRatio);
+      setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));
     });
   }
 };
@@ -297,6 +298,23 @@ var setupSeekBars = function() {
     });
   });
 };
+
+//
+var setCurrentTimeInPlayerBar = function(currentTime){
+  $('.current-time').text(currentTime)
+}
+
+var setTotalTimeInPlayerBar = function(totalTime){
+  $('.total-time').text(filterTimeCode(currentSongFromAlbum.duration));
+}
+//103.96s , 1min = 60s, 103.96s => 1 min and 0.732666 min
+var filterTimeCode = function(timeInSeconds){
+  var x = parseFloat(timeInSeconds)
+  min = Math.floor(x/60)
+  sec = Math.floor(x % 60)
+  var units = function(num){num < 10 ? num = "0" + num : num ; return num}
+  return min +":"+ units(sec)
+}
 
 //Button Play in album list and in play control
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
